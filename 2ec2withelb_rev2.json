@@ -1,0 +1,61 @@
+{
+"AWSTemplateFormatVersion" : "2010-09-09",
+    "Description": "RDS",
+    "Resources": {
+       "MyEC2Instance1": {
+          "Type" : "AWS::EC2::Instance",
+          "Properties" : {
+          "AvailabilityZone" : "us-gov-east-1a",
+          "DisableApiTermination" : false,
+          "ImageId" : "ami-05f4133d4fdbd61f3",
+          "InstanceType" : "t3.medium",
+          "KeyName" : "pietto_aws_gov_east",
+          "SecurityGroupIds" : ["sg-0700387312b87b78f"],
+          "SubnetId" : "subnet-aaa744c3",
+          "Tags" : [
+              {
+              "Key" : "Name",
+              "Value": "RDS Web 1"
+              } 
+                   ]
+          }
+      },
+       "MyEC2Instance2": {
+          "Type" : "AWS::EC2::Instance",
+          "Properties" : {
+          "AvailabilityZone" : "us-gov-east-1a",
+          "DisableApiTermination" : false,
+          "ImageId" : "ami-05f4133d4fdbd61f3",
+          "InstanceType" : "t3.medium",
+          "KeyName" : "pietto_aws_gov_east",
+          "SecurityGroupIds" : ["sg-0700387312b87b78f"],
+          "SubnetId" : "subnet-aaa744c3",
+          "Tags" : [
+              {
+              "Key" : "Name",
+              "Value": "RDS Web 2"
+              } 
+                   ]
+          }
+      },
+    
+        "MyLoadBalancer": {
+          "Type" : "AWS::ElasticLoadBalancingV2::LoadBalancer",
+          "Properties" : {
+          "AvailabilityZones" : [ "us-gov-east-1a" ],
+          "Instances" : [ 
+           { "Ref" : "MyEC2Instance1" },
+           { "Ref" : "MyEC2Instance2" }
+           ],
+          "Listeners" : [ {
+          "LoadBalancerPort" : "3389",
+          "InstancePort" : "3389",
+          "Protocol" : "TCP" }],
+          "Scheme" : "internet-facing", 
+          "LoadBalancerName" : "RDSELB",
+          "SecurityGroups" : [ "sg-0700387312b87b78f" ]
+          
+          }
+        }  
+    } 
+}      

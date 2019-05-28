@@ -1,0 +1,5 @@
+Rename-Computer -NewName "Server044" -DomainCredential Domain01\Admin01 -Restart
+add-computer –domainname "corp.cogsandbox.local"  -Credential corp.cogsandbox.local\Administrator
+Import-Module RemoteDesktop
+
+SECRET MANAGER

@@ -1,0 +1,83 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "RDS Farm",
+  "Resources": {
+     "MyEC2Instance1": {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+        "AvailabilityZone" : "us-gov-east-1a",
+        "DisableApiTermination" : false,
+        "ImageId" :  "ami-05f4133d4fdbd61f3",
+        "InstanceType" : "t3.medium",
+        "KeyName" : "pietto_aws_gov_east",
+        "SecurityGroupIds" : ["sg-0700387312b87b78f"],
+        "SubnetId" : "subnet-aaa744c3",
+        "Tags" : [ {"Key" : "Name",
+                   "Value": "RDCB"} ]
+        }
+    },
+    "MyEC2Instance2": {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+        "AvailabilityZone" : "us-gov-east-1a",
+        "DisableApiTermination" : false,
+        "ImageId" :  "ami-05f4133d4fdbd61f3",
+        "InstanceType" : "t3.medium",
+        "KeyName" : "pietto_aws_gov_east",
+        "SecurityGroupIds" : ["sg-0700387312b87b78f"],
+        "SubnetId" : "subnet-aaa744c3",
+        "Tags" : [ {"Key" : "Name",
+                   "Value": "RDWA"} ]
+        }
+    },
+
+    {
+        "Type" : "AWS::ElasticLoadBalancing::LoadBalancer",
+        "Properties" : {
+            "AvailabilityZones" : [ String, ... ],
+            "CrossZone" : True,
+            "HealthCheck" : HealthCheck,
+            "Instances" : [ 
+                { "Ref" : "MyEC2Instance1" },
+                { "Ref" : "MyEC2Instance2" }
+                ],
+            "Listeners" : [ 3389, ... ],
+            "LoadBalancerName" : RDS ELB,
+            "Scheme" : internet-facing,
+            "SecurityGroups" : [ String, ... ],
+            "Subnets" : [ String, ... ],
+            "Tags" : [ Tag, ... ]
+          }
+      },
+
+    "MyEC2Instance3": {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+        "AvailabilityZone" : "us-gov-east-1a",
+        "DisableApiTermination" : false,
+        "ImageId" :  "ami-05f4133d4fdbd61f3",
+        "InstanceType" : "t3.medium",
+        "KeyName" : "pietto_aws_gov_east",
+        "SecurityGroupIds" : ["sg-0700387312b87b78f"],
+        "SubnetId" : "subnet-aaa744c3",
+        "Tags" : [ {"Key" : "Name",
+                   "Value": "RDSH01"} ]
+        }
+    },
+    "MyEC2Instance4": {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+        "AvailabilityZone" : "us-gov-east-1a",
+        "DisableApiTermination" : false,
+        "ImageId" :  "ami-05f4133d4fdbd61f3",
+        "InstanceType" : "t3.medium",
+        "KeyName" : "pietto_aws_gov_east",
+        "SecurityGroupIds" : ["sg-0700387312b87b78f"],
+        "SubnetId" : "subnet-aaa744c3",
+        "Tags" : [ {"Key" : "Name",
+                   "Value": "RDS"} ]
+        }
+    }
+  }
+}
+  
